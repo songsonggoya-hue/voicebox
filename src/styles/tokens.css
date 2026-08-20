@@ -1,0 +1,66 @@
+/* design.md 토큰 전체 이식 — 값은 항상 design.md를 원본으로 삼는다 */
+:root {
+  /* colors */
+  --color-surface: #dcc9a3;
+  --color-surface-dim: #cbb68a;
+  --color-surface-bright: #e8dab9;
+  --color-surface-container-lowest: #f3ead4;
+  --color-surface-container-low: #ede0c2;
+  --color-surface-container: #e4d4ae;
+  --color-surface-container-high: #d8c59b;
+  --color-surface-container-highest: #ccb88c;
+  --color-on-surface: #2e2417;
+  --color-on-surface-variant: #5c4a34;
+  --color-outline: #8a7355;
+  --color-outline-variant: #c4ae84;
+
+  --color-primary: #3f5372;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #c3d0e3;
+  --color-on-primary-container: #16202e;
+  --color-on-primary-fixed-variant: #2c405c;
+
+  --color-secondary: #a1503a;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #e8c4b4;
+  --color-on-secondary-container: #4a2013;
+
+  --color-tertiary: #8c7a3d;
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-container: #e4d9a8;
+  --color-on-tertiary-container: #3a3012;
+
+  --color-background: #dcc9a3;
+  --color-on-background: #2e2417;
+
+  /* typography */
+  --font-title: "Gowun Batang", serif;
+  --font-body: "Pretendard", -apple-system, "Malgun Gothic", sans-serif;
+
+  /* rounded */
+  --rounded-sm: 2px;
+  --rounded-default: 6px;
+  --rounded-md: 10px;
+  --rounded-lg: 14px;
+  --rounded-full: 9999px;
+
+  /* spacing */
+  --spacing-2xs: 2px;
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 40px;
+  --spacing-gutter: 20px;
+  --spacing-margin: 24px;
+
+  /* shadow — 항상 글자색(on-surface) 기반 반투명 갈색 */
+  --shadow-sm: 0 1px 2px rgba(46, 36, 23, 0.12);
+  --shadow-md: 0 4px 12px rgba(46, 36, 23, 0.16);
+  --shadow-lg: 0 8px 24px rgba(46, 36, 23, 0.2);
+
+  /* border */
+  --border-hairline: 1px solid var(--color-outline-variant);
+  --border-default: 1px solid var(--color-outline);
+  --border-emphasis: 2px solid var(--color-primary);
+}

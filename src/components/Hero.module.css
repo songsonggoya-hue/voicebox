@@ -1,0 +1,42 @@
+.hero {
+  background: var(--color-primary);
+  color: var(--color-surface-container-lowest);
+  padding: 40px 24px;
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--color-primary-container);
+  margin-bottom: var(--spacing-sm);
+}
+
+.title {
+  font-family: var(--font-title);
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.3;
+  max-width: 640px;
+  margin: 0 0 var(--spacing-lg);
+}
+
+.cta {
+  display: inline-flex;
+  appearance: none;
+  border: none;
+  background: var(--color-surface-container-lowest);
+  color: var(--color-primary);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: var(--rounded-default);
+  padding: 13px 26px;
+}
+
+@media (max-width: 560px) {
+  .title {
+    font-size: 24px;
+  }
+}

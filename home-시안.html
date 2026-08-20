@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>우리 동네 목소리함 — 홈 화면 시안 (안 1 · 실용형)</title>
+<link rel="icon" href="icons/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+  :root{
+    --primary:#3F5372;
+    --on-primary:#FFFFFF;
+    --primary-container:#C3D0E3;
+    --on-primary-container:#16202E;
+    --secondary:#A1503A;
+    --on-secondary:#FFFFFF;
+    --secondary-container:#E8C4B4;
+    --on-secondary-container:#4A2013;
+    --tertiary:#8C7A3D;
+    --on-tertiary:#FFFFFF;
+    --tertiary-container:#E4D9A8;
+    --on-tertiary-container:#3A3012;
+    --bg:#DCC9A3;
+    --surface-lowest:#F3EAD4;
+    --surface-low:#EDE0C2;
+    --surface:#E4D4AE;
+    --surface-high:#D8C59B;
+    --on-surface:#2E2417;
+    --on-surface-variant:#5C4A34;
+    --outline:#8A7355;
+    --outline-variant:#C4AE84;
+    --shadow-sm:0 1px 2px rgba(46,36,23,.12);
+    --shadow-md:0 4px 12px rgba(46,36,23,.16);
+    --shadow-lg:0 8px 24px rgba(46,36,23,.20);
+    --font-title:'Gowun Batang', serif;
+    --font-body:'Pretendard', -apple-system, 'Malgun Gothic', sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:var(--font-body);
+    color:var(--on-surface);
+    background-color:var(--bg);
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+    line-height:1.5;
+  }
+  img{max-width:100%;display:block;}
+  button{font-family:inherit;cursor:pointer;}
+  select{font-family:inherit;}
+
+  /* ---------- 헤더 ---------- */
+  .page-header{
+    display:flex;align-items:center;gap:10px;
+    padding:14px 24px;
+    background:var(--surface-lowest);
+    border-bottom:1px solid var(--outline-variant);
+  }
+  .page-header img{width:32px;height:32px;border-radius:8px;}
+  .page-header .org-name{
+    font-family:var(--font-title);font-weight:700;font-size:17px;color:var(--on-surface);
+  }
+
+  /* ---------- 배지 ---------- */
+  .badge{
+    display:inline-flex;align-items:center;
+    font-size:11px;font-weight:600;
+    padding:2px 8px;border-radius:999px;
+    white-space:nowrap;
+  }
+  .badge.status-접수{background:var(--primary-container);color:var(--on-primary-container);}
+  .badge.status-처리중{background:var(--tertiary-container);color:var(--on-tertiary-container);}
+  .badge.status-완료{background:var(--secondary-container);color:var(--on-secondary-container);}
+  .badge.field{
+    background:transparent;color:var(--on-surface-variant);
+    border:1px solid var(--outline-variant);font-weight:500;
+  }
+
+  /* ---------- 히어로 : 강한 한 줄 ---------- */
+  .hero{
+    background:var(--primary);color:var(--surface-lowest);
+    padding:40px 24px;text-align:left;
+  }
+  .hero .eyebrow{
+    font-size:13px;font-weight:700;letter-spacing:.04em;color:var(--primary-container);margin-bottom:8px;
+  }
+  .hero h1{
+    font-family:var(--font-title);font-size:30px;line-height:1.3;margin:0 0 10px;max-width:640px;
+  }
+  .hero p{
+    font-size:14px;color:var(--primary-container);max-width:560px;margin:0 0 20px;
+  }
+  .btn-primary{
+    appearance:none;border:none;background:var(--surface-lowest);color:var(--primary);
+    font-weight:700;border-radius:8px;padding:13px 26px;font-size:15px;
+  }
+
+  /* ---------- 필터 ---------- */
+  .filters{
+    display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;
+    padding:14px 24px;background:var(--surface-low);border-bottom:1px solid var(--outline-variant);
+  }
+  .status-pills{display:flex;flex-wrap:wrap;gap:6px;}
+  .status-pills button{
+    appearance:none;border:1px solid var(--outline-variant);
+    background:var(--surface-lowest);color:var(--on-surface-variant);
+    padding:6px 13px;border-radius:999px;font-size:13px;font-weight:600;
+  }
+  .status-pills button.active{
+    background:var(--primary);border-color:var(--primary);color:var(--on-primary);
+  }
+  .field-select{
+    appearance:none;
+    border:1px solid var(--outline-variant);
+    background:var(--surface-lowest) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%235C4A34'/%3E%3C/svg%3E") no-repeat right 12px center;
+    color:var(--on-surface);
+    padding:7px 32px 7px 13px;border-radius:8px;font-size:13px;font-weight:500;
+    min-width:120px;
+  }
+
+  /* ---------- 목록 ---------- */
+  .list-wrap{padding:20px 24px 8px;}
+  .list-wrap h2{font-size:13px;color:var(--on-surface-variant);margin:0 0 12px;font-weight:600;}
+  .card-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:12px;
+  }
+  .card{
+    background:var(--surface-lowest);border:1px solid var(--outline-variant);
+    border-radius:10px;box-shadow:var(--shadow-sm);overflow:hidden;
+    display:flex;flex-direction:column;
+  }
+  .ph{
+    height:88px;width:100%;
+    background:repeating-linear-gradient(135deg, #C9BBA0, #C9BBA0 10px, #BEAF92 10px, #BEAF92 20px);
+    border-bottom:1px solid var(--outline-variant);
+  }
+  .card-body{padding:12px;}
+  .card-badges{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;}
+  .card-title{font-family:var(--font-title);font-weight:700;color:var(--on-surface);margin:0 0 4px;font-size:14px;line-height:1.35;}
+  .card-excerpt{
+    color:var(--on-surface-variant);margin:0 0 10px;font-size:12px;line-height:1.4;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  }
+  .card-meta{display:flex;gap:8px;color:var(--on-surface-variant);font-size:11px;}
+  .card-meta .dot{opacity:.5;}
+
+  /* ---------- 푸터 ---------- */
+  .page-footer{
+    padding:28px 24px 40px;text-align:center;
+    color:var(--on-surface-variant);font-size:13px;
+    border-top:1px solid var(--outline-variant);margin-top:8px;
+  }
+  .page-footer .org{font-family:var(--font-title);font-weight:700;color:var(--on-surface);display:block;margin-bottom:4px;font-size:14px;}
+
+  @media (max-width:1000px){ .card-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:560px){ .card-grid{grid-template-columns:1fr;} .hero h1{font-size:24px;} }
+</style>
+</head>
+<body>
+
+  <header class="page-header">
+    <img src="icons/icon-192.png" alt="별마실공예단 아이콘">
+    <span class="org-name">별마실공예단</span>
+  </header>
+
+  <section class="hero">
+    <div class="eyebrow">우리 동네 목소리함</div>
+    <h1>동네의 작은 불편, 그냥 지나치지 마세요.</h1>
+    <p>가로등부터 놀이터까지 — 남겨주신 이야기를 별마실공예단이 접수하고, 처리 과정을 접수 → 처리중 → 완료로 알려드립니다.</p>
+    <button class="btn-primary">의견 남기기</button>
+  </section>
+
+  <section class="filters">
+    <div class="status-pills">
+      <button class="active">전체</button>
+      <button>접수</button>
+      <button>처리중</button>
+      <button>완료</button>
+    </div>
+    <select class="field-select">
+      <option>분야 전체</option>
+      <option>안전</option>
+      <option>시설</option>
+      <option>환경</option>
+      <option>교통</option>
+    </select>
+  </section>
+
+  <div class="list-wrap">
+    <h2>최근 남겨진 의견 5건</h2>
+    <div class="card-grid">
+      <article class="card">
+        <div class="ph"></div>
+        <div class="card-body">
+          <div class="card-badges"><span class="badge status-접수">접수</span><span class="badge field">안전</span></div>
+          <h3 class="card-title">골목 가로등이 며칠째 안 켜져요</h3>
+          <p class="card-excerpt">퇴근길에 지나는 골목 가로등이 일주일째 꺼져 있어서 밤에 너무 어둡습니다. 확인 부탁드려요.</p>
+          <div class="card-meta"><span>김민지</span><span class="dot">·</span><span>2026.08.15</span></div>
+        </div>
+      </article>
+      <article class="card">
+        <div class="ph"></div>
+        <div class="card-body">
+          <div class="card-badges"><span class="badge status-처리중">처리중</span><span class="badge field">시설</span></div>
+          <h3 class="card-title">놀이터 그네가 삐걱거려요</h3>
+          <p class="card-excerpt">아이들이 타는 그네 체인에서 계속 삐걱대는 소리가 나요. 안전에도 문제가 있어 보입니다.</p>
+          <div class="card-meta"><span>박준호</span><span class="dot">·</span><span>2026.08.12</span></div>
+        </div>
+      </article>
+      <article class="card">
+        <div class="ph"></div>
+        <div class="card-body">
+          <div class="card-badges"><span class="badge status-완료">완료</span><span class="badge field">환경</span></div>
+          <h3 class="card-title">화단 옆 쓰레기가 계속 쌓여요</h3>
+          <p class="card-excerpt">화단 옆에 무단으로 버려지는 쓰레기가 많아 냄새도 나고 보기에도 좋지 않았는데 정리됐어요.</p>
+          <div class="card-meta"><span>이서연</span><span class="dot">·</span><span>2026.08.05</span></div>
+        </div>
+      </article>
+      <article class="card">
+        <div class="ph"></div>
+        <div class="card-body">
+          <div class="card-badges"><span class="badge status-처리중">처리중</span><span class="badge field">교통</span></div>
+          <h3 class="card-title">버스 정류장 지붕이 부서졌어요</h3>
+          <p class="card-excerpt">지난 태풍 이후로 정류장 지붕 한쪽이 부서진 채로 방치되어 있어 비 오는 날 이용이 불편해요.</p>
+          <div class="card-meta"><span>최우진</span><span class="dot">·</span><span>2026.08.10</span></div>
+        </div>
+      </article>
+      <article class="card">
+        <div class="ph"></div>
+        <div class="card-body">
+          <div class="card-badges"><span class="badge status-완료">완료</span><span class="badge field">시설</span></div>
+          <h3 class="card-title">공원 벤치 페인트가 벗겨졌어요</h3>
+          <p class="card-excerpt">공원 벤치 페인트가 많이 벗겨져서 옷이 더러워질까 걱정했는데 깔끔하게 새로 칠해주셨네요.</p>
+          <div class="card-meta"><span>정하늘</span><span class="dot">·</span><span>2026.07.28</span></div>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <footer class="page-footer">
+    <span class="org">별마실공예단</span>
+    손끝으로 만나는, 우리 동네의 소소한 하루 · 우리 동네 목소리함
+  </footer>
+
+</body>
+</html>

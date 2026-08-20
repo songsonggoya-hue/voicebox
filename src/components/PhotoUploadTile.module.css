@@ -1,0 +1,70 @@
+.wrap {
+  width: 160px;
+}
+
+.tile {
+  position: relative;
+  width: 160px;
+  aspect-ratio: 1 / 1;
+  border: 1px dashed var(--color-outline);
+  border-radius: var(--rounded-md);
+  background: var(--color-surface-container-low);
+  appearance: none;
+  padding: 0;
+  overflow: hidden;
+}
+
+.placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  height: 100%;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--color-on-surface-variant);
+}
+
+.plus {
+  font-size: 24px;
+  line-height: 1;
+  color: var(--color-outline);
+}
+
+.preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.remove {
+  position: absolute;
+  top: var(--spacing-xs);
+  right: var(--spacing-xs);
+  width: 22px;
+  height: 22px;
+  border-radius: var(--rounded-full);
+  background: var(--color-surface-container-lowest);
+  border: var(--border-hairline);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  line-height: 1;
+  color: var(--color-on-surface);
+}
+
+.hiddenInput {
+  display: none;
+}
+
+.hint {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-on-surface-variant);
+  margin: var(--spacing-xs) 0 0;
+}
