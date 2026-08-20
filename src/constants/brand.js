@@ -11,4 +11,4 @@ export const DEMO_AUTHOR_NAME = "이웃 주민";
 
 export const STATUS_OPTIONS = ["접수", "처리중", "완료"];
 
-export const FIELD_OPTIONS = ["안전", "시설", "환경", "교통"];
+export const FIELD_OPTIONS = ["안전", "시설", "환경", "교통", "기타"];
