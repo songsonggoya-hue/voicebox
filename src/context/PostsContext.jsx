@@ -44,7 +44,20 @@ export function PostsProvider({ children }) {
     fetchPosts();
   }, []);
 
-  async function addPost({ title, content, field, photo }) {
+  async function uploadPhoto(file) {
+    const ext = file.name.split(".").pop();
+    const path = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+    const { error } = await supabase.storage.from("photos").upload(path, file);
+    if (error) {
+      console.error("사진을 업로드하지 못했습니다.", error);
+      throw error;
+    }
+    return supabase.storage.from("photos").getPublicUrl(path).data.publicUrl;
+  }
+
+  async function addPost({ title, content, field, photoFile }) {
+    const photoUrl = photoFile ? await uploadPhoto(photoFile) : null;
+
     const { data, error } = await supabase
       .from("posts")
       .insert({
@@ -52,7 +65,7 @@ export function PostsProvider({ children }) {
         content,
         category: field,
         author: DEMO_AUTHOR_NAME,
-        photo_url: photo || null,
+        photo_url: photoUrl,
       })
       .select()
       .single();

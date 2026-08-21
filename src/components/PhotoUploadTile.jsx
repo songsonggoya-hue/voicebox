@@ -72,7 +72,7 @@ export default function PhotoUploadTile({ value, onChange }) {
         className={styles.hiddenInput}
         onChange={handleFileChange}
       />
-      <p className={styles.hint}>사진은 새로고침하면 사라질 수 있어요.</p>
+      <p className={styles.hint}>사진은 저장 시 서버에 업로드돼요.</p>
     </div>
   );
 }

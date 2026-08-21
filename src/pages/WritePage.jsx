@@ -25,7 +25,7 @@ export default function WritePage() {
         title: title.trim(),
         content: content.trim(),
         field,
-        photo: photo?.previewUrl ?? null,
+        photoFile: photo?.file ?? null,
       });
       navigate(`/posts/${newId}`);
     } catch {
