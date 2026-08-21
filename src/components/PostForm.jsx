@@ -19,6 +19,35 @@ export default function PostForm({
     initialPhotoUrl ? { file: null, previewUrl: initialPhotoUrl } : null,
   );
   const [submitting, setSubmitting] = useState(false);
+  const [aiLoading, setAiLoading] = useState(false);
+
+  async function handleAiAssist() {
+    const draft = content.trim() || title.trim();
+    if (!draft) {
+      window.alert("먼저 어떤 내용인지 간단히 적어주세요.");
+      return;
+    }
+
+    setAiLoading(true);
+    try {
+      const res = await fetch("/api/generate-post", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ draft }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data?.error || "AI 작성도우미 호출에 실패했습니다.");
+      }
+      setTitle(data.title);
+      setContent(data.content);
+      setField(data.category);
+    } catch (err) {
+      window.alert(err.message || "AI 작성도우미 호출에 실패했습니다.");
+    } finally {
+      setAiLoading(false);
+    }
+  }
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -56,9 +85,19 @@ export default function PostForm({
       </div>
 
       <div className={styles.field}>
-        <label className={styles.label} htmlFor="content">
-          내용
-        </label>
+        <div className={styles.labelRow}>
+          <label className={styles.label} htmlFor="content">
+            내용
+          </label>
+          <button
+            type="button"
+            className={styles.aiButton}
+            onClick={handleAiAssist}
+            disabled={aiLoading}
+          >
+            {aiLoading ? "AI가 다듬는 중..." : "✨ AI 작성도우미"}
+          </button>
+        </div>
         <textarea
           id="content"
           className={styles.textarea}

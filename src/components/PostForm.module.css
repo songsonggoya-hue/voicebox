@@ -17,6 +17,29 @@
   color: var(--color-on-surface-variant);
 }
 
+.labelRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+}
+
+.aiButton {
+  appearance: none;
+  background: transparent;
+  color: var(--color-primary);
+  border: var(--border-default);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: var(--rounded-default);
+  padding: var(--spacing-2xs) var(--spacing-sm);
+}
+
+.aiButton:disabled {
+  opacity: 0.6;
+}
+
 .input,
 .textarea {
   background: var(--color-surface-container-low);
