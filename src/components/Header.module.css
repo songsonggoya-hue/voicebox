@@ -1,4 +1,7 @@
 .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 14px 24px;
   background: var(--color-surface-container-lowest);
   border-bottom: var(--border-hairline);
@@ -22,4 +25,43 @@
   font-weight: 700;
   line-height: 24px;
   color: var(--color-on-surface);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.loginButton,
+.signupButton {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: var(--rounded-default);
+  padding: var(--spacing-xs) var(--spacing-sm);
+}
+
+.loginButton {
+  color: var(--color-primary);
+  background: transparent;
+  border: var(--border-default);
+}
+
+.signupButton {
+  color: var(--color-on-primary);
+  background: var(--color-primary);
+  border: none;
+}
+
+.avatarLink {
+  display: inline-flex;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--rounded-full);
+  border: var(--border-hairline);
+  object-fit: cover;
 }

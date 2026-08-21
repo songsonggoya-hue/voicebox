@@ -1,0 +1,170 @@
+.page {
+  padding: var(--spacing-lg) 24px var(--spacing-xl);
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.heading {
+  font-family: var(--font-title);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 30px;
+  color: var(--color-on-surface);
+  margin: 0 0 var(--spacing-lg);
+}
+
+.tabs {
+  display: flex;
+  border-bottom: var(--border-hairline);
+  margin-bottom: var(--spacing-lg);
+}
+
+.tab {
+  flex: 1;
+  appearance: none;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--color-on-surface-variant);
+}
+
+.tabActive {
+  color: var(--color-primary);
+  border-bottom: var(--border-emphasis);
+}
+
+.empty {
+  color: var(--color-on-surface-variant);
+  font-family: var(--font-body);
+  font-size: 15px;
+  text-align: center;
+  padding: var(--spacing-xl) 0;
+}
+
+.postList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.postItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  background: var(--color-surface-container-lowest);
+  border: var(--border-hairline);
+  border-radius: var(--rounded-md);
+  box-shadow: var(--shadow-sm);
+  padding: var(--spacing-md);
+}
+
+.postLink {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.badgeRow {
+  display: flex;
+  gap: var(--spacing-xs);
+}
+
+.postTitle {
+  font-family: var(--font-title);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-on-surface);
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.postDate {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-on-surface-variant);
+}
+
+.postActions {
+  display: flex;
+  gap: var(--spacing-xs);
+  flex-shrink: 0;
+}
+
+.editButton,
+.deleteButton {
+  appearance: none;
+  border: var(--border-default);
+  background: transparent;
+  color: var(--color-primary);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: var(--rounded-default);
+  padding: var(--spacing-xs) var(--spacing-sm);
+}
+
+.deleteButton {
+  color: var(--color-secondary);
+  border-color: var(--color-secondary);
+}
+
+.infoCard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+  background: var(--color-surface-container-lowest);
+  border: var(--border-hairline);
+  border-radius: var(--rounded-md);
+  box-shadow: var(--shadow-sm);
+  padding: var(--spacing-lg);
+}
+
+.avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--rounded-full);
+  border: var(--border-hairline);
+  object-fit: cover;
+}
+
+.infoRow {
+  display: flex;
+  gap: var(--spacing-sm);
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--color-on-surface);
+}
+
+.infoLabel {
+  width: 64px;
+  flex-shrink: 0;
+  color: var(--color-on-surface-variant);
+  font-weight: 600;
+}
+
+.signOutButton {
+  appearance: none;
+  border: var(--border-default);
+  background: transparent;
+  color: var(--color-on-surface);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: var(--rounded-default);
+  padding: var(--spacing-sm) var(--spacing-md);
+}

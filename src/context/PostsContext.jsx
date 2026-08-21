@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { supabase } from "../lib/supabaseClient";
-import { DEMO_AUTHOR_NAME } from "../constants/brand";
+import { useAuth } from "./AuthContext";
 
 const PostsContext = createContext(null);
 
@@ -22,10 +22,12 @@ function mapRow(row) {
     author: row.author,
     date: formatDate(row.created_at),
     photo: row.photo_url,
+    userId: row.user_id,
   };
 }
 
 export function PostsProvider({ children }) {
+  const { user } = useAuth();
   const [posts, setPosts] = useState([]);
 
   async function fetchPosts() {
@@ -64,7 +66,8 @@ export function PostsProvider({ children }) {
         title,
         content,
         category: field,
-        author: DEMO_AUTHOR_NAME,
+        author: user.user_metadata?.full_name || user.email,
+        user_id: user.id,
         photo_url: photoUrl,
       })
       .select()
@@ -80,8 +83,41 @@ export function PostsProvider({ children }) {
     return newPost.id;
   }
 
+  async function updatePost(id, { title, content, field, photoFile, removePhoto }) {
+    const updates = { title, content, category: field };
+    if (photoFile) {
+      updates.photo_url = await uploadPhoto(photoFile);
+    } else if (removePhoto) {
+      updates.photo_url = null;
+    }
+
+    const { data, error } = await supabase
+      .from("posts")
+      .update(updates)
+      .eq("id", id)
+      .select()
+      .single();
+
+    if (error) {
+      console.error("의견을 수정하지 못했습니다.", error);
+      throw error;
+    }
+
+    const updated = mapRow(data);
+    setPosts((prev) => prev.map((p) => (p.id === id ? updated : p)));
+  }
+
+  async function deletePost(id) {
+    const { error } = await supabase.from("posts").delete().eq("id", id);
+    if (error) {
+      console.error("의견을 삭제하지 못했습니다.", error);
+      throw error;
+    }
+    setPosts((prev) => prev.filter((p) => p.id !== id));
+  }
+
   return (
-    <PostsContext.Provider value={{ posts, addPost }}>
+    <PostsContext.Provider value={{ posts, addPost, updatePost, deletePost }}>
       {children}
     </PostsContext.Provider>
   );
