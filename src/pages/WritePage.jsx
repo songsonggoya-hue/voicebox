@@ -13,18 +13,24 @@ export default function WritePage() {
   const [content, setContent] = useState("");
   const [field, setField] = useState("");
   const [photo, setPhoto] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    if (!title.trim() || !content.trim() || !field) return;
+    if (!title.trim() || !content.trim() || !field || submitting) return;
 
-    const newId = addPost({
-      title: title.trim(),
-      content: content.trim(),
-      field,
-      photo: photo?.previewUrl ?? null,
-    });
-    navigate(`/posts/${newId}`);
+    setSubmitting(true);
+    try {
+      const newId = await addPost({
+        title: title.trim(),
+        content: content.trim(),
+        field,
+        photo: photo?.previewUrl ?? null,
+      });
+      navigate(`/posts/${newId}`);
+    } catch {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -78,8 +84,8 @@ export default function WritePage() {
           <PhotoUploadTile value={photo} onChange={setPhoto} />
         </div>
 
-        <button type="submit" className={styles.submit}>
-          저장하기
+        <button type="submit" className={styles.submit} disabled={submitting}>
+          {submitting ? "저장 중..." : "저장하기"}
         </button>
       </form>
     </div>

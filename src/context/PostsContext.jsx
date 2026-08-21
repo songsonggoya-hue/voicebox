@@ -1,50 +1,69 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { seedPosts } from "../data/seedPosts";
+import { supabase } from "../lib/supabaseClient";
 import { DEMO_AUTHOR_NAME } from "../constants/brand";
-
-const STORAGE_KEY = "voicebox_posts_v1";
 
 const PostsContext = createContext(null);
 
-function loadStoredPosts() {
-  try {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : [];
-  } catch {
-    return [];
-  }
-}
-
-function formatToday() {
-  const d = new Date();
+function formatDate(isoString) {
+  const d = new Date(isoString);
   const yyyy = d.getFullYear();
   const mm = String(d.getMonth() + 1).padStart(2, "0");
   const dd = String(d.getDate()).padStart(2, "0");
   return `${yyyy}.${mm}.${dd}`;
 }
 
+function mapRow(row) {
+  return {
+    id: row.id,
+    title: row.title,
+    content: row.content,
+    field: row.category,
+    status: row.status,
+    author: row.author,
+    date: formatDate(row.created_at),
+    photo: row.photo_url,
+  };
+}
+
 export function PostsProvider({ children }) {
-  const [storedPosts, setStoredPosts] = useState(loadStoredPosts);
+  const [posts, setPosts] = useState([]);
+
+  async function fetchPosts() {
+    const { data, error } = await supabase
+      .from("posts")
+      .select("*")
+      .order("created_at", { ascending: false });
+    if (error) {
+      console.error("의견 목록을 불러오지 못했습니다.", error);
+      return;
+    }
+    setPosts(data.map(mapRow));
+  }
 
   useEffect(() => {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(storedPosts));
-  }, [storedPosts]);
+    fetchPosts();
+  }, []);
 
-  // 새로 쓴 글이 항상 맨 앞, 그다음 시안의 샘플 글 5건 순서.
-  const posts = [...storedPosts, ...seedPosts];
+  async function addPost({ title, content, field, photo }) {
+    const { data, error } = await supabase
+      .from("posts")
+      .insert({
+        title,
+        content,
+        category: field,
+        author: DEMO_AUTHOR_NAME,
+        photo_url: photo || null,
+      })
+      .select()
+      .single();
 
-  function addPost({ title, content, field, photo }) {
-    const newPost = {
-      id: `post-${Date.now()}`,
-      title,
-      content,
-      field,
-      status: "접수",
-      author: DEMO_AUTHOR_NAME,
-      date: formatToday(),
-      photo: photo || null,
-    };
-    setStoredPosts((prev) => [newPost, ...prev]);
+    if (error) {
+      console.error("의견을 저장하지 못했습니다.", error);
+      throw error;
+    }
+
+    const newPost = mapRow(data);
+    setPosts((prev) => [newPost, ...prev]);
     return newPost.id;
   }
 
